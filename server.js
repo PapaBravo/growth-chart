@@ -1,19 +1,20 @@
+import 'dotenv/config'
+
 import restana from 'restana';
 import fetch from 'node-fetch';
 import files from 'serve-static';
-import path from 'path';
-
-
 
 const service = restana();
 
 const env = {
-    "baseUrl": "https://boeck.berlin",
-    "token": "super-secret"
+    "baseUrl": process.env.BABYBUDDY_BASE_URL,
+    "token": process.env.BABYBUDDY_TOKEN
 };
 
 async function getWeight(req, res) {
-    const weightRes = await fetch(`${env.baseUrl}/api/weight/`, {
+    const weightUrl = `${env.baseUrl}/api/weight/`;
+    console.log('Getting weight', weightUrl);
+    const weightRes = await fetch(weightUrl, {
         mode: 'no-cors',
         credentials: 'include',
         headers: {
@@ -27,7 +28,6 @@ async function getWeight(req, res) {
 
 service.get('/api/weights', getWeight);
 
-
 const serve = files('./public', {
     lastModified: false,
     setHeaders: (res, path) => {
@@ -36,6 +36,5 @@ const serve = files('./public', {
   });
 
   service.use(serve);
-
 
 service.start(3000);
