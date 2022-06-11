@@ -22,7 +22,7 @@ async function getWeight(req, res) {
         }
     });
     const weights = await weightRes.json();
-    res.send(weights);
+    res.send(weights.results);
 }
 
 
