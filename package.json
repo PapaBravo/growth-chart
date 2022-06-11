@@ -1,0 +1,19 @@
+{
+  "name": "growth-charts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.2.6",
+    "restana": "^4.9.5",
+    "serve-static": "^1.15.0"
+  }
+}
