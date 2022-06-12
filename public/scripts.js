@@ -21,6 +21,8 @@ function renderWeight(weights, percentiles) {
         datasets: [{
           label: 'Weight',
           data: weights.reverse().map(w => ({x: w.date, y: w.weight}) ),
+          showLine: false,
+          pointBackgroundColor: 'lightblue'
         }]
       };
 
@@ -45,7 +47,9 @@ function renderWeight(weights, percentiles) {
       PERCENTILE_NAMES.forEach(p => {
         data.datasets.push({
           label: p,
-          data: percentiles.map(perc => ({x: perc.date, y: perc[p]}))
+          data: percentiles.map(perc => ({x: perc.date, y: perc[p]})),
+          pointRadius: 0,
+          borderWidth: 1
         });
       })
 
