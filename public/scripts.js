@@ -49,11 +49,11 @@ function renderWeight(weights, percentiles) {
           label: p,
           data: percentiles.map(perc => ({x: perc.date, y: perc[p]})),
           pointRadius: 0,
-          borderWidth: 1
+          borderWidth: 1,
+          borderColor: 'darkgray'
         });
       })
 
-    
       const config = {
         type: 'line',
         data: data,
