@@ -3,6 +3,9 @@ import 'dotenv/config'
 import restana from 'restana';
 import fetch from 'node-fetch';
 import files from 'serve-static';
+import { DateTime } from "luxon";
+
+import {getPercentiles} from './percentiles.js'
 
 const service = restana();
 
@@ -25,8 +28,23 @@ async function getWeight(req, res) {
     res.send(weights.results);
 }
 
+async function getPercentilesController(req, res) {
+    try {
+        console.log(req.query)
+        const dateOfBirth = DateTime.fromISO(req.query.dateOfBirth);
+        const lastMeasurement = DateTime.fromISO(req.query.lastMeasurement);
+        const percentiles = await getPercentiles(dateOfBirth, lastMeasurement);
+        res.send(percentiles);
+    } catch (err) {
+        console.error(err);
+        res.send(err.message || 'Unknown error', 500);
+    }
+    
+}
+
 
 service.get('/api/weights', getWeight);
+service.get('/api/percentiles', getPercentilesController);
 
 const serve = files('./public', {
     lastModified: false,
