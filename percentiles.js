@@ -15,6 +15,8 @@ async function getPercentileFile() {
     })
 }
 
+const PERCENTILE_NAMES = ['P01', 'P1', 'P3', 'P5', 'P10', 'P15', 'P25', 'P50', 'P75', 'P85', 'P90', 'P95', 'P97', 'P99', 'P999'];
+
 /**
  * 
  * @param {luxon.DateTime} dateOfBirth 
@@ -23,7 +25,10 @@ async function getPercentileFile() {
  */
 async function getPercentiles(dateOfBirth, lastMeasurement) {
     let percentiles = await getPercentileFile();
-    percentiles.forEach(p => p.date = dateOfBirth.plus({days: p.Age}));
+    percentiles.forEach(p => {
+        p.date = dateOfBirth.plus({days: p.Age});
+        PERCENTILE_NAMES.forEach(pn => p[pn] *= 1000 );
+    });
     percentiles = percentiles.filter(p => p.date <= lastMeasurement);
 
     console.log(percentiles.length, percentiles[100]);
